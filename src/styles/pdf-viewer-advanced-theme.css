@@ -1,0 +1,35 @@
+#outerContainer {
+    overflow-x: var(--outer-container-overflow-x, hidden);
+}
+.viewsManagerOpen{
+  overflow-y: var(--outer-container-overflow-y, hidden);
+}
+/* Give toolbar buttons a bit more breathing room */
+.toolbarButton,
+.dialogButton {
+  margin-inline: 0.125rem;
+}
+
+/* Slightly larger touch targets for sidebar buttons */
+#toolbarViewerLeft .toolbarButton,
+#toolbarViewerRight .toolbarButton {
+  min-width: 2.5rem;
+}
+
+/* Softer toolbar shadow */
+#toolbarContainer {
+  --toolbar-height: 2.75rem;
+  box-shadow: 0 1px 0 rgba(32, 32, 32, 0.08);
+}
+
+/* Rounded inputs */
+#scaleSelect,
+#pageNumber,
+input[type="number"] {
+  border-radius: 4px;
+}
+
+/* Accent color for range sliders */
+input[type="range"] {
+  accent-color: var(--outline-color);
+}

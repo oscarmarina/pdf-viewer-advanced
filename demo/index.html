@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Demo - pdf-viewer-advanced</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="data:," />
+    <meta name="description" content="pdf-viewer-advanced" />
+    <style>
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+        font-family: sans-serif;
+      }
+    </style>
+  </head>
+  <body>
+    <script type="module">
+      import {html, render} from './entry.js';
+      const pdfUrl = './compressed.tracemonkey-pldi-09.pdf';
+
+      render(
+        html`<pdf-viewer-advanced
+          src="${pdfUrl}"
+          @page-change="${(ev) => console.log('page:', ev.detail)}"
+        ></pdf-viewer-advanced>`,
+        document.body
+      );
+    </script>
+  </body>
+</html>

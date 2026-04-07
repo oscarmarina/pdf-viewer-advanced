@@ -1,0 +1,173 @@
+{
+  "name": "@blockquote-web-components/pdf-viewer-advanced",
+  "version": "1.0.0-rc.1",
+  "description": "Webcomponent pdf-viewer-advanced following open-wc recommendations",
+  "keywords": [
+    "lit",
+    "web-component",
+    "lit-element"
+  ],
+  "license": "MIT",
+  "author": "pdf-viewer-advanced",
+  "type": "module",
+  "exports": {
+    ".": {
+      "default": "./dist/index.js"
+    },
+    "./package.json": {
+      "default": "./package.json"
+    },
+    "./PdfViewerAdvanced.js": {
+      "default": "./dist/PdfViewerAdvanced.js"
+    },
+    "./pdf-viewer-advanced.js": {
+      "default": "./dist/define/pdf-viewer-advanced.js"
+    },
+    "./index.js": {
+      "default": "./dist/index.js"
+    },
+    "./pdf-viewer-advanced-styles.css.js": {
+      "default": "./dist/styles/pdf-viewer-advanced-styles.css.js"
+    }
+  },
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "files": [
+    "/src/",
+    "/dist/"
+  ],
+  "scripts": {
+    "analyze": "cem analyze --litelement --globs \"src/**/*.{css,ts}\" \"index.js\"",
+    "build": "npm run dev:vite && npm run build:lib && npm run build:tsc",
+    "postbuild": "node scripts/post-build.js",
+    "build:lib": "vite build --config vite.lib.config.js",
+    "build:tsc": "tsc",
+    "dev:vite": "vite build",
+    "format": "npm run format:eslint && npm run format:prettier && npm run format:stylelint",
+    "format:eslint": "eslint . --fix",
+    "format:prettier": "prettier \"**/*.{js,ts,css,scss,html,json}\" --write --ignore-path .prettierignore",
+    "format:stylelint": "stylelint \"{demo,src}/**/*.{js,ts,css,scss,html}\" --fix --ignore-path .prettierignore",
+    "postinstall": "npm run sort:package",
+    "prepare": "husky",
+    "preview:vite": "vite preview",
+    "sass:watch": "sass-style-template -j ts",
+    "sort:package": "npx sort-package-json",
+    "start": "concurrently -k -r \"npm:vite\" \"npm:sass:watch\"",
+    "test": "vitest",
+    "test:watch": "vitest --browser.headless=false",
+    "update:pdfjs": "node scripts/update-pdfjs.js",
+    "vite": "vite"
+  },
+  "lint-staged": {
+    "**/*.{js,ts,html}": [
+      "npm run format"
+    ],
+    "**/*.json": [
+      "npm run format:prettier"
+    ],
+    "**/*.{scss,css}": [
+      "npm run format:prettier",
+      "npm run format:stylelint"
+    ]
+  },
+  "prettier": {
+    "bracketSpacing": false,
+    "printWidth": 100,
+    "singleQuote": true,
+    "trailingComma": "es5",
+    "overrides": [
+      {
+        "files": "*.{scss,css}",
+        "options": {
+          "singleQuote": false
+        }
+      },
+      {
+        "files": "*.json",
+        "options": {
+          "parser": "json-stringify"
+        }
+      }
+    ]
+  },
+  "stylelint": {
+    "extends": "stylelint-config-standard-scss",
+    "allowEmptyInput": true,
+    "rules": {
+      "custom-property-pattern": null,
+      "no-duplicate-selectors": null,
+      "color-function-notation": null,
+      "alpha-value-notation": null,
+      "media-feature-name-no-unknown": null,
+      "comment-empty-line-before": null,
+      "declaration-empty-line-before": null,
+      "property-no-vendor-prefix": null,
+      "selector-attribute-quotes": null,
+      "value-no-vendor-prefix": null
+    },
+    "overrides": [
+      {
+        "files": [
+          "**/*.html"
+        ],
+        "customSyntax": "postcss-html"
+      },
+      {
+        "files": [
+          "**/*.{ts,js}"
+        ],
+        "customSyntax": "postcss-lit"
+      }
+    ]
+  },
+  "dependencies": {
+    "lit": "^3.3.2"
+  },
+  "devDependencies": {
+    "@blockquote/cem-to-markdown-readme": "^1.0.0",
+    "@blockquote/rollup-plugin-total-bundlesize": "^2.3.1",
+    "@blockquote/sass-style-template": "^5.1.1",
+    "@custom-elements-manifest/analyzer": "^0.11.0",
+    "@eslint/js": "^9.39.4",
+    "@html-eslint/eslint-plugin": "^0.58.1",
+    "@html-eslint/parser": "^0.58.1",
+    "@open-wc/semantic-dom-diff": "^0.20.1",
+    "@open-wc/testing-helpers": "^3.0.1",
+    "@types/mocha": "^10.0.10",
+    "@vitest/browser-playwright": "^4.1.2",
+    "@vitest/coverage-istanbul": "^4.1.2",
+    "@vitest/coverage-v8": "^4.1.2",
+    "@vitest/ui": "^4.1.2",
+    "chai-a11y-axe": "^1.5.0",
+    "concurrently": "^9.2.1",
+    "eslint": "^9.39.4",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-html": "^8.1.4",
+    "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-lit": "^2.2.1",
+    "eslint-plugin-lit-a11y": "^5.1.1",
+    "eslint-plugin-wc": "^3.1.0",
+    "globals": "^17.4.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.4.0",
+    "playwright": "^1.59.1",
+    "postcss-html": "^1.8.1",
+    "postcss-lit": "^1.4.1",
+    "prettier": "^3.8.1",
+    "rollup-plugin-copy": "^3.5.0",
+    "rollup-plugin-node-externals": "^8.1.2",
+    "sort-package-json": "^3.6.1",
+    "stylelint": "^17.6.0",
+    "stylelint-config-standard-scss": "^17.0.0",
+    "tinyglobby": "^0.2.15",
+    "tslib": "^2.8.1",
+    "typescript": "^6.0.2",
+    "typescript-eslint": "^8.58.0",
+    "vite": "^8.0.3",
+    "vitest": "^4.1.2"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "customElements": "custom-elements.json"
+}

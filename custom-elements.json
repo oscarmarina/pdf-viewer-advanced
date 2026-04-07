@@ -1,0 +1,570 @@
+{
+  "schemaVersion": "1.0.0",
+  "readme": "",
+  "modules": [
+    {
+      "kind": "javascript-module",
+      "path": "src/PdfViewerAdvanced.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "![Lit](https://img.shields.io/badge/lit-3.0.0-blue.svg)\n\n`blockquote-pdf-viewer-advanced` A Web Component that wraps the official\n[PDF.js](https://mozilla.github.io/pdf.js/) viewer inside a sandboxed `srcdoc` iframe, exposing a declarative Lit property interface on top.\n\n```js\nimport '@blockquote-web-components/pdf-viewer-advanced/pdf-viewer-advanced.js';\nimport {html, LitElement} from 'lit';\n\nexport class MyPdfApp extends LitElement {\n  render() {\n    return html`\n      <pdf-viewer-advanced\n        src=\"/assets/manual.pdf\"\n        page=\"1\"\n        locale=\"de\"\n        viewer-css-theme=\"DARK\"\n      ></pdf-viewer-advanced>\n    `;\n  }\n}\n```\n\n### Using with Vanilla JS\n\nRegister the component via a script tag and use it like any standard HTML element.\n\n```html\n<script\n  type=\"module\"\n  src=\"node_modules/@blockquote-web-components/pdf-viewer-advanced/pdf-viewer-advanced.js\"\n></script>\n\n<pdf-viewer-advanced id=\"myViewer\" src=\"sample.pdf\"></pdf-viewer-advanced>\n\n<script>\n  const viewer = document.getElementById('myViewer');\n  viewer.addEventListener('page-change', (e) => {\n    console.log('Navigated to page:', e.detail.page);\n  });\n\n  // Programmatic control after initialization\n  viewer.initComplete.then(() => {\n    viewer.page = '5';\n    viewer.zoom = '200';\n  });\n</script>\n```\n\n## Key Features\n\n- **Total Isolation**: Uses a sandboxed `srcdoc` iframe. Your app's CSS cannot leak into the viewer, and vice versa.\n- **Modern Theming**: Support for `LIGHT`, `DARK`, and `AUTOMATIC` (OS-preference) themes.\n- **Internationalization**: Support for over 100+ locales via PDF.js Fluent system.\n- **Native Annotations**: Built-in editor for highlighters, free-text, ink drawings, and signatures.\n- **Reactive Sync**: Properties like `page`, `zoom`, and `search` are bidirectionally synced with the viewer's internal state.\n\n## Documentation\n\n- **[Getting Started](./docs/tutorial-getting-started.md)**\n---",
+          "name": "PdfViewerAdvanced",
+          "slots": [
+            {
+              "description": "No slots — the component is self-contained.",
+              "name": ""
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "src",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "URL of the PDF document to display. Supports absolute and relative paths.",
+              "attribute": "src"
+            },
+            {
+              "kind": "field",
+              "name": "page",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "Page number to navigate to (string, e.g. `\"5\"`). Synced via `location.hash`.",
+              "attribute": "page"
+            },
+            {
+              "kind": "field",
+              "name": "zoom",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "Zoom level as percentage string (e.g. `\"150\"`) or named value\n(`\"page-fit\"`, `\"page-width\"`, `\"auto\"`). Synced via `location.hash`.",
+              "attribute": "zoom"
+            },
+            {
+              "kind": "field",
+              "name": "search",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "Text to search for within the document. Synced via `location.hash`.",
+              "attribute": "search"
+            },
+            {
+              "kind": "field",
+              "name": "phrase",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "Whether `search` is an exact phrase (`\"true\"`) or individual words.",
+              "attribute": "phrase"
+            },
+            {
+              "kind": "field",
+              "name": "pagemode",
+              "type": {
+                "text": "string"
+              },
+              "default": "'none'",
+              "description": "Sidebar mode: `\"none\"`, `\"thumbs\"`, `\"bookmarks\"`, or `\"attachments\"`.",
+              "attribute": "pagemode"
+            },
+            {
+              "kind": "field",
+              "name": "locale",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "BCP 47 locale for the viewer UI (e.g. `\"es\"`, `\"de\"`).\nChanging this triggers a full viewer re-initialization — there is no\nincremental locale update in PDF.js.",
+              "attribute": "locale"
+            },
+            {
+              "kind": "field",
+              "name": "viewerCssTheme",
+              "type": {
+                "text": "ViewerCssThemeKey"
+              },
+              "default": "'AUTOMATIC'",
+              "description": "Color theme for the viewer: `\"AUTOMATIC\"`, `\"LIGHT\"`, or `\"DARK\"`.",
+              "attribute": "viewer-css-theme"
+            },
+            {
+              "kind": "field",
+              "name": "iframeTitle",
+              "type": {
+                "text": "string"
+              },
+              "default": "'PDF viewer'",
+              "description": "Accessibility title for the `<iframe>` element.",
+              "attribute": "iframe-title"
+            },
+            {
+              "kind": "field",
+              "name": "workerSrc",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "Override URL for the PDF.js web worker script.",
+              "attribute": "worker-src"
+            },
+            {
+              "kind": "field",
+              "name": "cMapUrl",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "Override URL for CMap (character map) files.",
+              "attribute": "c-map-url"
+            },
+            {
+              "kind": "field",
+              "name": "iccUrl",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "Override URL for ICC color profile files.",
+              "attribute": "icc-url"
+            },
+            {
+              "kind": "field",
+              "name": "imageResourcesPath",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "Override URL for viewer image resources.",
+              "attribute": "image-resources-path"
+            },
+            {
+              "kind": "field",
+              "name": "sandboxBundleSrc",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "Override URL for the scripting sandbox bundle.",
+              "attribute": "sandbox-bundle-src"
+            },
+            {
+              "kind": "field",
+              "name": "standardFontDataUrl",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "Override URL for standard PDF font data.",
+              "attribute": "standard-font-data-url"
+            },
+            {
+              "kind": "field",
+              "name": "wasmUrl",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "Override URL for WebAssembly files used by PDF.js.",
+              "attribute": "wasm-url"
+            },
+            {
+              "kind": "field",
+              "name": "initComplete",
+              "type": {
+                "text": "Promise<InitializationData>"
+              },
+              "description": "Promise that resolves when the viewer is fully initialized.\n\nAwait this to access the PDF.js `viewerApp` instance:\n```ts\nconst {viewerApp} = await el.initComplete;\nviewerApp?.eventBus.on('pagesloaded', () => { ... });\n```"
+            },
+            {
+              "kind": "method",
+              "name": "injectViewerStyles",
+              "return": {
+                "type": {
+                  "text": "Promise<void>"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "styleText",
+                  "type": {
+                    "text": "string"
+                  },
+                  "description": "Raw CSS string to inject (not a URL)."
+                }
+              ],
+              "description": "Injects custom CSS into the viewer iframe.\n\nStyles survive viewer re-initialization (e.g. locale changes) — they are\nstored internally and re-applied after each init cycle. Duplicate strings\nare ignored."
+            },
+            {
+              "kind": "method",
+              "name": "setViewerOptions",
+              "return": {
+                "type": {
+                  "text": ""
+                }
+              },
+              "parameters": [
+                {
+                  "name": "options",
+                  "default": "{}",
+                  "type": {
+                    "text": "Record<string, string | number>"
+                  },
+                  "description": "Key-value pairs matching PDF.js `AppOptions` names."
+                }
+              ],
+              "description": "Sets PDF.js `AppOptions` on the viewer.\n\nIf the viewer is already initialized, options are applied immediately.\nIf called before initialization completes, options are queued and applied\nduring the init sequence.\n\n**Note:** Some structural options (e.g. `workerSrc`) require a full\nviewer reload to take effect. Use the dedicated attributes for those."
+            },
+            {
+              "kind": "field",
+              "name": "currentPage",
+              "type": {
+                "text": "number"
+              },
+              "description": "Current visible page number (1-based). Updated via the PDF.js `pagechanging` event.",
+              "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "totalPages",
+              "type": {
+                "text": "number"
+              },
+              "description": "Total number of pages in the loaded document. Set after the `pagesloaded` event.",
+              "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "currentZoom",
+              "type": {
+                "text": "number"
+              },
+              "description": "Current zoom as a raw scale multiplier (e.g. `1.5` means 150%). Updated via `scalechanging`.",
+              "readonly": true
+            }
+          ],
+          "events": [
+            {
+              "name": "viewer-error",
+              "type": {
+                "text": "CustomEvent"
+              },
+              "description": "An error occurred during initialization or PDF loading. `event.detail` contains the error object."
+            },
+            {
+              "name": "page-change",
+              "type": {
+                "text": "CustomEvent<{page: number}>"
+              },
+              "description": "The visible page changed. `event.detail.page` is the 1-based page number."
+            },
+            {
+              "name": "zoom-change",
+              "type": {
+                "text": "CustomEvent<{zoom: number}>"
+              },
+              "description": "The zoom level changed. `event.detail.zoom` is the raw scale multiplier (e.g. `1.5` = 150%)."
+            }
+          ],
+          "attributes": [
+            {
+              "type": {
+                "text": "string"
+              },
+              "description": "URL of the PDF document to display. Supports absolute and relative paths.",
+              "name": "src",
+              "default": "''",
+              "fieldName": "src"
+            },
+            {
+              "type": {
+                "text": "string"
+              },
+              "description": "Page number to navigate to (string, e.g. `\"5\"`). Synced via `location.hash`.",
+              "name": "page",
+              "default": "''",
+              "fieldName": "page"
+            },
+            {
+              "type": {
+                "text": "string"
+              },
+              "description": "Zoom level as percentage string (e.g. `\"150\"`) or named value\n(`\"page-fit\"`, `\"page-width\"`, `\"auto\"`). Synced via `location.hash`.",
+              "name": "zoom",
+              "default": "''",
+              "fieldName": "zoom"
+            },
+            {
+              "type": {
+                "text": "string"
+              },
+              "description": "Text to search for within the document. Synced via `location.hash`.",
+              "name": "search",
+              "default": "''",
+              "fieldName": "search"
+            },
+            {
+              "type": {
+                "text": "string"
+              },
+              "description": "Whether `search` is an exact phrase (`\"true\"`) or individual words.",
+              "name": "phrase",
+              "default": "''",
+              "fieldName": "phrase"
+            },
+            {
+              "type": {
+                "text": "string"
+              },
+              "description": "Sidebar mode: `\"none\"`, `\"thumbs\"`, `\"bookmarks\"`, or `\"attachments\"`.",
+              "name": "pagemode",
+              "default": "'none'",
+              "fieldName": "pagemode"
+            },
+            {
+              "type": {
+                "text": "string"
+              },
+              "description": "BCP 47 locale for the viewer UI (e.g. `\"es\"`, `\"de\"`).\nChanging this triggers a full viewer re-initialization — there is no\nincremental locale update in PDF.js.",
+              "name": "locale",
+              "default": "''",
+              "fieldName": "locale"
+            },
+            {
+              "type": {
+                "text": "ViewerCssThemeKey"
+              },
+              "description": "Color theme for the viewer: `\"AUTOMATIC\"`, `\"LIGHT\"`, or `\"DARK\"`.",
+              "name": "viewer-css-theme",
+              "default": "'AUTOMATIC'",
+              "fieldName": "viewerCssTheme"
+            },
+            {
+              "type": {
+                "text": "string"
+              },
+              "description": "Accessibility title for the `<iframe>` element.",
+              "name": "iframe-title",
+              "default": "'PDF viewer'",
+              "fieldName": "iframeTitle"
+            },
+            {
+              "type": {
+                "text": "string"
+              },
+              "description": "Override URL for the PDF.js web worker script.",
+              "name": "worker-src",
+              "default": "''",
+              "fieldName": "workerSrc"
+            },
+            {
+              "type": {
+                "text": "string"
+              },
+              "description": "Override URL for CMap (character map) files.",
+              "name": "c-map-url",
+              "default": "''",
+              "fieldName": "cMapUrl"
+            },
+            {
+              "type": {
+                "text": "string"
+              },
+              "description": "Override URL for ICC color profile files.",
+              "name": "icc-url",
+              "default": "''",
+              "fieldName": "iccUrl"
+            },
+            {
+              "type": {
+                "text": "string"
+              },
+              "description": "Override URL for viewer image resources.",
+              "name": "image-resources-path",
+              "default": "''",
+              "fieldName": "imageResourcesPath"
+            },
+            {
+              "type": {
+                "text": "string"
+              },
+              "description": "Override URL for the scripting sandbox bundle.",
+              "name": "sandbox-bundle-src",
+              "default": "''",
+              "fieldName": "sandboxBundleSrc"
+            },
+            {
+              "type": {
+                "text": "string"
+              },
+              "description": "Override URL for standard PDF font data.",
+              "name": "standard-font-data-url",
+              "default": "''",
+              "fieldName": "standardFontDataUrl"
+            },
+            {
+              "type": {
+                "text": "string"
+              },
+              "description": "Override URL for WebAssembly files used by PDF.js.",
+              "name": "wasm-url",
+              "default": "''",
+              "fieldName": "wasmUrl"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "pdf-viewer-advanced",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "PdfViewerAdvanced",
+          "declaration": {
+            "name": "PdfViewerAdvanced",
+            "module": "src/PdfViewerAdvanced.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/index.ts",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "PdfViewerAdvanced",
+          "declaration": {
+            "name": "PdfViewerAdvanced",
+            "module": "./PdfViewerAdvanced.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "ViewerCssTheme",
+          "declaration": {
+            "name": "ViewerCssTheme",
+            "module": "./types.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "ViewerCssThemeKey",
+          "declaration": {
+            "name": "ViewerCssThemeKey",
+            "module": "./types.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "InitializationData",
+          "declaration": {
+            "name": "InitializationData",
+            "module": "./types.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "IframeWindow",
+          "declaration": {
+            "name": "IframeWindow",
+            "module": "./types.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/types.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "ViewerCssTheme",
+          "type": {
+            "text": "{AUTOMATIC: 0, LIGHT: 1, DARK: 2}"
+          },
+          "default": "{AUTOMATIC: 0, LIGHT: 1, DARK: 2}",
+          "description": "Numeric values for the PDF.js `viewerCssTheme` option.\n\n- `AUTOMATIC` (0) — follows the user's OS preference via `prefers-color-scheme`.\n- `LIGHT` (1) — forces light mode regardless of OS setting.\n- `DARK` (2) — forces dark mode regardless of OS setting."
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ViewerCssTheme",
+          "declaration": {
+            "name": "ViewerCssTheme",
+            "module": "src/types.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/define/pdf-viewer-advanced.ts",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "pdf-viewer-advanced",
+          "declaration": {
+            "name": "PdfViewerAdvanced",
+            "module": "/src/PdfViewerAdvanced.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/styles/pdf-viewer-advanced-styles.css.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "styles",
+          "default": "css` :host { font-family: sans-serif; display: flex; flex-direction: column; width: 100%; height: 100%; contain: content; box-sizing: border-box; } :host([hidden]), [hidden] { display: none !important; } *, *::before, *::after { box-sizing: inherit; } .viewer-container { display: flex; flex: 1; overflow: hidden; } .iframe-wrapper { flex: 1; position: relative; overflow: hidden; } iframe { width: 100%; height: 100%; border: 0; } `"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "styles",
+          "declaration": {
+            "name": "styles",
+            "module": "src/styles/pdf-viewer-advanced-styles.css.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/styles/pdf-viewer-advanced-theme.css",
+      "declarations": [],
+      "exports": []
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/viewer/web/debugger.css",
+      "declarations": [],
+      "exports": []
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/viewer/web/viewer.css",
+      "declarations": [],
+      "exports": []
+    }
+  ]
+}

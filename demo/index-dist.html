@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Demo - pdf-viewer-advanced</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="data:," />
+    <meta name="description" content="pdf-viewer-advanced demo" />
+    <script type="importmap">
+      {
+        "imports": {
+          "lit": "https://cdn.jsdelivr.net/npm/lit@3.3.1/+esm",
+          "lit/decorators.js": "https://cdn.jsdelivr.net/npm/lit@3.3.1/decorators.js/+esm"
+        }
+      }
+    </script>
+    <style>
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+        font-family: sans-serif;
+      }
+    </style>
+  </head>
+  <body>
+    <pdf-viewer-advanced
+      src="./compressed.tracemonkey-pldi-09.pdf"
+      viewer-css-theme="LIGHT"
+      locale="de"
+    ></pdf-viewer-advanced>
+    <script type="module" src="./define/pdf-viewer-advanced.js"></script>
+  </body>
+</html>
